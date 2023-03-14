@@ -1,0 +1,36 @@
+/* 
+    Created on : 9.12.2021, 18:58:36
+    Author     : Petr Bednář
+*/
+
+* {
+    -fx-primary-color: #18202c;
+    -fx-primary-color-hover: #08101c;
+
+    -fx-secondary-color: #232f3e;
+    -fx-secondary-color-hover: #394d65;
+
+    -fx-tertiary-color: #405772;
+
+    -fx-danger-color: #632F2F;
+    -fx-danger-color-hover: #7b3a3a;
+
+    -fx-information-color: #157cbf;
+    -fx-information-color-hover: #188bd6;
+
+    -fx-information-text-color: #289ce7;
+    -fx-information-text-color-hover: #53afeb;
+
+    -fx-warning-color: #cc9900;
+    -fx-warning-color-hover: #ffc10a;
+
+    -fx-neutral-color: #18202c;
+    -fx-neutral-color-hover: #232f3e;
+
+    -fx-unfocused-color: #4d4d4d;
+
+    -fx-primary-text-color: #fefefe;
+    -fx-secondary-text-color: #cccccc;
+    -fx-tertiary-text-color: #aaaaaa;
+
+}

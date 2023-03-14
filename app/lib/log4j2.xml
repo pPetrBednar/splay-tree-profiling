@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <File name="Simple"
+              fileName="app/log/log ${date:yyyy-MM-dd HH_mm_ss}.log">
+            <PatternLayout pattern="[%d] [%p] %c{1} [%t] %m%n"/>
+            <Filters>
+                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </File>
+        <File name="Technical"
+              fileName="app/log/log ${date:yyyy-MM-dd HH_mm_ss}.log">
+            <PatternLayout pattern="[%d] [%p] %c{1} [%t] %m%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <!--<AppenderRef ref="Simple" />-->
+            <AppenderRef ref="Technical"/>
+        </Root>
+    </Loggers>
+</Configuration>

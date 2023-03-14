@@ -1,0 +1,68 @@
+/* 
+    Created on : 10.12.2021, 2:01:16
+    Author     : Petr Bednář
+*/
+
+.tab-pane .tab-selected-line {
+    -fx-background-color: -fx-information-color;
+}
+/*
+.tab-pane .tab-header-area .jfx-rippler{
+    -jfx-rippler-fill: -fx-information-color;
+}
+*/
+.tab-pane .tab .tab-label {
+}
+
+.tab-pane .tab {
+    -fx-background-color:  -fx-secondary-color;
+    -fx-pref-width: 200;
+    -fx-pref-height: 40;
+    -fx-focus-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-padding: 0;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-pref-width: 200.0;
+    -fx-font-family: -fx-primary-font-family;
+    -fx-text-fill: -fx-secondary-text-color;
+    -fx-font-weight: normal;
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color:  -fx-secondary-color-hover;
+    -fx-cursor: hand;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color:  -fx-primary-color;
+    -fx-cursor: default;
+}
+
+.tab-pane .tab:selected .tab-label{
+    -fx-text-fill:  -fx-information-color !important;
+}
+
+/*.jfx-tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-pref-width: 200.0;
+    -fx-text-fill: -fx-secondary-text-color;
+    -fx-font-size: 14;
+    -fx-font-family: 'Source Sans Pro';
+}*/
+
+.tab-header-background {
+    -fx-background-color: -fx-secondary-color;
+    -fx-padding: 0;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+.tab-pane > .tab-header-area {
+    -fx-padding: 0;
+}
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane fx:id="mainContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1600.0" style="-fx-border-color: -fx-primary-color; -fx-border-width: 0 1 1 1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.ppetrbednar.stp.ui.Root">
+   <center>
+      <BorderPane fx:id="box" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <stylesheets>
+      <URL value="@style/Global.css" />
+      <URL value="@style/Effects.css" />
+      <URL value="@style/ScrollPane.css" />
+   </stylesheets>
+   <top>
+      <Pane prefHeight="30.0" style="-fx-background-color: -fx-secondary-color;" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>

@@ -1,0 +1,352 @@
+/* 
+    Author     : Petr Bednář 
+*/
+
+/*
+    Hover effects
+*/
+
+.hover-effect-05:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05) !important;
+    -fx-cursor: hand;
+}
+
+.hover-effect-10:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1) !important;
+    -fx-cursor: hand;
+}
+
+.hover-effect-15:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15) !important;
+    -fx-cursor: hand;
+}
+
+.hover-effect-stroke:hover {
+    -fx-stroke: rgba(0, 0, 0, 0.60) !important;
+    -fx-cursor: hand;
+}
+
+.hover-effect-fill:hover {
+    -fx-fill: rgba(0, 0, 0, 0.60) !important;
+    -fx-cursor: hand;
+}
+
+.disable-focus:focused {
+    -fx-focus-color: transparent !important;
+    -jfx-disable-visual-focus: true;
+}
+
+.no-bg-radius {
+    -fx-background-radius: 0 !important;
+}
+
+.hover-effect-information:hover {
+    -fx-background-color: -fx-information-color !important;
+}
+
+.hover-effect-warning:hover {
+    -fx-background-color: -fx-warning-color !important;
+}
+
+.hover-effect-neutral:hover {
+    -fx-background-color: -fx-neutral-color !important;
+}
+
+.hover-effect-danger:hover {
+    -fx-background-color: -fx-danger-color !important;
+}
+
+.text-hover-effect-primary:hover {
+    -fx-text-fill: -fx-primary-text-color !important;
+}
+
+.text-hover-effect-secondary:hover {
+    -fx-text-fill: -fx-secondary-text-color !important;
+}
+
+.text-hover-effect-information:hover {
+    -fx-text-fill: -fx-information-color-hover !important;
+}
+
+/*
+    Normal button
+*/
+.btn-style-1 {
+    -fx-background-color:  -fx-secondary-color;
+    -fx-cursor: hand;
+}
+
+.btn-style-1:hover {
+    -fx-background-color:  -fx-secondary-color-hover !important;
+}
+
+/*
+    Danger button
+*/
+.btn-style-2 {
+    -fx-background-color:  -fx-danger-color;
+    -fx-cursor: hand;
+}
+
+.btn-style-2:hover {
+    -fx-background-color:  -fx-danger-color-hover !important;
+}
+
+/*
+    Information button
+*/
+.btn-style-3 {
+    -fx-background-color: -fx-information-color;
+    -fx-cursor: hand;
+}
+
+.btn-style-3:hover {
+    -fx-background-color: -fx-information-color-hover !important;
+}
+
+/*
+    Warning button
+*/
+.btn-style-4 {
+    -fx-background-color:  -fx-warning-color;
+    -fx-cursor: hand;
+}
+
+.btn-style-4:hover {
+    -fx-background-color:  -fx-warning-color-hover !important;
+}
+
+/*
+    Neutral button
+*/
+.btn-style-5 {
+    -fx-background-color:  -fx-neutral-color;
+    -fx-cursor: hand;
+}
+
+.btn-style-5:hover {
+    -fx-background-color:  -fx-neutral-color-hover !important;
+}
+
+/*
+
+    Primary gradient background
+
+*/
+
+.primary-gradient-background-color {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, -fx-tertiary-color, -fx-secondary-color);
+}
+
+.secondary-gradient-background-color {
+    -fx-background-color:  linear-gradient(from 0% 0% to 50% 50%, -fx-secondary-color, -fx-primary-color);
+}
+
+
+.text-field-style-1 {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-text-fill: -fx-primary-text-color;
+    -fx-padding: 5 10 5 10;
+    -jfx-focus-color: -fx-information-color;
+    -jfx-unfocus-color: transparent;
+}
+
+.text-field-style-2 {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-primary-text-color;
+    -fx-padding: 5 10 5 10;
+    -jfx-focus-color: -fx-information-color;
+    -jfx-unfocus-color: transparent;
+}
+
+.text-field-style-3 {
+    -fx-background-color: -fx-secondary-color;
+    -fx-text-fill: -fx-primary-text-color;
+    -fx-padding: 5 10 5 10;
+    -jfx-focus-color: -fx-information-color;
+    -jfx-unfocus-color: transparent;
+}
+
+.combo-box-style-1 {
+    -fx-background-color: -fx-secondary-color;
+    -fx-text-fill: -fx-primary-text-color;
+    -fx-padding: 5 10 5 10;
+    -jfx-focus-color: transparent;
+    -jfx-unfocus-color: transparent;
+}
+
+.combo-box-style-1 .combo-box-popup .list-view {
+    -fx-background-color: -fx-primary-color;
+}
+
+.combo-box-style-1 .list-cell {
+    -fx-background-color: -fx-secondary-color;
+    -fx-text-fill: -fx-primary-text-color;
+}
+
+.combo-box-style-1 .list-cell:hover {
+    -fx-background-color: -fx-secondary-color-hover;
+    -fx-cursor: hand;
+}
+
+.combo-box-style-2 {
+    -fx-background-color: -fx-secondary-color;
+    -fx-text-fill: -fx-primary-text-color;
+    -fx-padding: 0 10 0 10;
+    -jfx-focus-color: transparent;
+    -jfx-unfocus-color: transparent;
+}
+
+.combo-box-style-2 .combo-box-popup .list-view {
+    -fx-background-color: -fx-primary-color;
+}
+
+.combo-box-style-2 .list-cell {
+    -fx-background-color: -fx-secondary-color;
+    -fx-text-fill: -fx-primary-text-color;
+}
+
+.combo-box-style-2 .list-cell:hover {
+    -fx-background-color: -fx-secondary-color-hover;
+    -fx-cursor: hand;
+}
+
+.combo-box-style-3 {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-primary-text-color;
+    -fx-padding: 0;
+    -jfx-focus-color: transparent;
+    -jfx-unfocus-color: transparent;
+}
+
+.combo-box-style-3 .combo-box-popup .list-view {
+    -fx-background-color: -fx-secondary-color;
+}
+
+.combo-box-style-3 .list-cell:filled:selected{
+    -fx-background-color: transparent;
+}
+
+.combo-box-style-3 .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-primary-text-color;
+}
+
+.combo-box-style-3 .list-cell:hover {
+    -fx-background-color: -fx-secondary-color-hover;
+    -fx-cursor: hand;
+}
+
+.combo-box-style-3:readonly {
+    -jfx-focus-color: transparent;
+}
+
+.jfx-text-field-style-1 {
+    -fx-text-fill:  -fx-primary-text-color;
+    -jfx-unfocus-color:  transparent;
+    -jfx-focus-color:  -fx-information-color;
+    -fx-padding: 0;
+    -fx-prompt-text-fill: -fx-secondary-text-color;
+}
+
+.jfx-text-field-style-1:readonly {
+    -jfx-focus-color:  transparent;
+}
+
+.jfx-text-field-style-2 {
+    -fx-text-fill:   -fx-secondary-text-color;
+    -jfx-unfocus-color:  transparent;
+    -jfx-focus-color:  -fx-information-color;
+    -fx-padding: 0;
+    -fx-prompt-text-fill: -fx-secondary-text-color;
+}
+
+.jfx-text-field-style-2:readonly {
+    -jfx-focus-color:  transparent;
+}
+
+.jfx-text-area-style-1 {
+    -fx-text-fill:  -fx-primary-text-color;
+    -jfx-unfocus-color:  transparent;
+    -jfx-focus-color:  -fx-information-color;
+    -fx-padding: 0;
+    -fx-prompt-text-fill: -fx-secondary-text-color;
+}
+
+.jfx-text-area-style-1:readonly {
+    -jfx-focus-color:  transparent;
+}
+
+.progress-bar-style-1 {
+
+}
+
+.progress-bar-style-1 > .bar {
+    -fx-background-color: -fx-information-color;
+}
+
+.progress-bar-style-1 > .track {
+    -fx-background-color: -fx-secondary-color;
+}
+
+.slider-style-1 {
+    -jfx-default-thumb: -fx-information-color;
+}
+
+.slider-style-1 {
+    -fx-text-fill: -fx-primary-text-color;
+}
+
+.slider-style-1 > .thumb {
+    -fx-background-color: -fx-information-color;
+
+}
+
+.slider-style-1 .track {
+    -fx-pref-height: 5px;
+}
+
+.slider-style-1 > .animated-thumb {
+}
+
+
+.slider-style-1 .axis {
+    -fx-tick-label-fill: -fx-primary-text-color;
+}
+
+.check-box-style-1 {
+    -jfx-checked-color: -fx-information-color;
+    -jfx-unchecked-color: -fx-secondary-color;
+}
+
+.disabled-style-1 {
+    -fx-text-fill: -fx-secondary-text-color;
+}
+
+.glyph-style-1 {
+    -fx-fill: -fx-tertiary-text-color;
+}
+
+.glyph-style-1:hover {
+    -fx-fill: -fx-secondary-text-color;
+}
+
+.glyph-style-2 {
+    -fx-fill: -fx-information-color;
+}
+
+.glyph-style-2:hover {
+    -fx-fill: -fx-information-color-hover;
+}
+
+.glyph-style-3 {
+    -fx-fill: -fx-tertiary-text-color;
+}
+
+.glyph-style-4 {
+    -fx-fill: -fx-secondary-text-color;
+}
+
+.glyph-style-4:hover {
+    -fx-fill: -fx-information-color;
+}
