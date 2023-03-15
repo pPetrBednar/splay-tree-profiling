@@ -1,6 +1,6 @@
 package io.github.ppetrbednar.stp.logic;
 
-import io.github.ppetrbednar.stp.logic.structures.SplayTree;
+import io.github.ppetrbednar.stp.logic.structures.SplayTreeLegacy;
 
 import java.util.UUID;
 
@@ -9,7 +9,7 @@ public class STProfiler {
     }
 
     public static void test() {
-        SplayTree<String, User> splayTree = new SplayTree<>();
+        SplayTreeLegacy<String, User> splayTree = new SplayTreeLegacy<>();
 
      /*   User user30 = new User("30", "30");
         User user20 = new User("20", "20");
