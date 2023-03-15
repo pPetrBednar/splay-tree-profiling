@@ -1,43 +1,95 @@
 package io.github.ppetrbednar.stp.logic;
 
-import io.github.ppetrbednar.stp.logic.structures.SplayTreeLegacy;
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsoner;
+import io.github.ppetrbednar.stp.logic.structures.SplayTree;
+import org.apache.commons.io.FileUtils;
 
-import java.util.UUID;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class STProfiler {
-    public record User(String uid, String username) {
-    }
+    public static final File PROFILING_FOLDER = new File("./experiment");
+    public static final File PROFILING_DATA_FILE = new File("./experiment/data.json");
+    public static final File PROFILING_STATISTICS_FILE = new File("./experiment/statistics.json");
+    public static final int EXPERIMENTS = 10000;
+    public static final int VALUES = 1023;
+    public static final boolean SAVE_DATA = true;
+    private final HashMap<Integer, ExperimentData> experimentData = new HashMap<>();
 
-    public static void test() {
-        SplayTreeLegacy<String, User> splayTree = new SplayTreeLegacy<>();
+    public void profile() {
 
-     /*   User user30 = new User("30", "30");
-        User user20 = new User("20", "20");
-        User user40 = new User("40", "40");
-        User user10 = new User("10", "10");
-        User user28 = new User("28", "28");
-        User user35 = new User("35", "35");
-        User user50 = new User("50", "50");
-        User user25 = new User("25", "25");
-        User user22 = new User("22", "22");
-        User user23 = new User("23", "23");
-
-        splayTree.add(user30.uid, user30);
-        splayTree.add(user20.uid, user20);
-        splayTree.add(user40.uid, user40);
-        splayTree.add(user10.uid, user10);
-        splayTree.add(user28.uid, user28);
-        splayTree.add(user35.uid, user35);
-        splayTree.add(user50.uid, user50);
-        splayTree.add(user25.uid, user25);
-        splayTree.add(user22.uid, user22);
-        splayTree.add(user23.uid, user23);*/
-
-        for (int i = 1; i < 100; i++) {
-            User user = new User(UUID.randomUUID().toString(), "Name " + i);
-            splayTree.add(user.uid, user);
+        for (int i = 1; i <= EXPERIMENTS; i++) {
+            experiment(i);
         }
 
+        checkDataFolder();
+        try {
+            saveStatistics();
+            if (SAVE_DATA) {
+                saveData();
+            }
+        } catch (IOException e) {
+            System.out.println("Data saving failed.");
+        }
+    }
 
+    private void checkDataFolder() {
+        if (!PROFILING_FOLDER.exists()) {
+            PROFILING_FOLDER.mkdir();
+        }
+    }
+
+    private void saveStatistics() throws IOException {
+        ArrayList<Integer> treeDepths = new ArrayList<>();
+        experimentData.forEach((integer, data) -> treeDepths.add(data.depth()));
+
+        int min = Math.min(treeDepths);
+        int max = Math.max(treeDepths);
+        double mean = Math.mean(treeDepths);
+        List<Double> cumulativeMeans = Math.cumulativeMeans(treeDepths);
+        double median = Math.median(treeDepths);
+        List<Integer> modes = Math.getModes(treeDepths);
+
+        JsonObject statistics = new JsonObject();
+        statistics.put("experiments", EXPERIMENTS);
+        statistics.put("values", VALUES);
+        statistics.put("min", min);
+        statistics.put("max", max);
+        statistics.put("mean", mean);
+        statistics.put("cumulative_means", new JsonArray(cumulativeMeans));
+        statistics.put("median", median);
+        statistics.put("modes", new JsonArray(modes));
+
+        FileUtils.writeStringToFile(PROFILING_STATISTICS_FILE, Jsoner.prettyPrint(statistics.toJson()), StandardCharsets.UTF_8);
+    }
+
+    private void saveData() throws IOException {
+        JsonArray experiments = new JsonArray();
+        for (Integer id : experimentData.keySet()) {
+            var data = experimentData.get(id);
+            experiments.add(data.toJsonObject());
+        }
+
+        FileUtils.writeStringToFile(PROFILING_DATA_FILE, Jsoner.prettyPrint(experiments.toJson()), StandardCharsets.UTF_8);
+    }
+
+    private void experiment(int experimentId) {
+        SplayTree<Integer, Integer> splayTree = new SplayTree<>();
+        ArrayList<Integer> data = new ArrayList<>();
+        for (int i = 1; i <= VALUES; i++) {
+            data.add(i);
+        }
+
+        Collections.shuffle(data);
+
+        for (Integer id : data) {
+            splayTree.add(id, id);
+        }
+
+        experimentData.put(experimentId, new ExperimentData(data, splayTree.depth()));
     }
 }

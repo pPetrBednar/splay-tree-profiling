@@ -7,6 +7,7 @@ public class AppLauncher {
     public static void main(String[] args) {
         //App.main(args);
 
-        STProfiler.test();
+        STProfiler profiler = new STProfiler();
+        profiler.profile();
     }
 }

@@ -6,4 +6,6 @@ public interface ISplayTree<K extends Comparable<K>, V> {
     void add(K key, V value);
 
     V remove(K key);
+
+    int depth();
 }
