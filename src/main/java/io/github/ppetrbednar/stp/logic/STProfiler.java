@@ -2,6 +2,8 @@ package io.github.ppetrbednar.stp.logic;
 
 import io.github.ppetrbednar.stp.logic.structures.SplayTree;
 
+import java.util.UUID;
+
 public class STProfiler {
     public record User(String uid, String username) {
     }
@@ -9,7 +11,7 @@ public class STProfiler {
     public static void test() {
         SplayTree<String, User> splayTree = new SplayTree<>();
 
-        User user30 = new User("30", "30");
+     /*   User user30 = new User("30", "30");
         User user20 = new User("20", "20");
         User user40 = new User("40", "40");
         User user10 = new User("10", "10");
@@ -29,6 +31,13 @@ public class STProfiler {
         splayTree.add(user50.uid, user50);
         splayTree.add(user25.uid, user25);
         splayTree.add(user22.uid, user22);
-        splayTree.add(user23.uid, user23);
+        splayTree.add(user23.uid, user23);*/
+
+        for (int i = 1; i < 100; i++) {
+            User user = new User(UUID.randomUUID().toString(), "Name " + i);
+            splayTree.add(user.uid, user);
+        }
+
+
     }
 }

@@ -142,8 +142,10 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
             if (current.parent.parent == null) {
                 if (current.parent.isLeft(current)) {
                     rightRotation(current);
+                  //  print(false);
                 } else {
                     leftRotation(current);
+                   // print(false);
                 }
             } else {
                 Node parent = current.parent;
@@ -151,24 +153,24 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
 
                 if (parent.isLeft(current) && grandParent.isLeft(parent)) {
                     rightRotation(parent);
-                    print(false);
+                   // print(false);
                     rightRotation(current);
-                    print(false);
+                   // print(false);
                 } else if (parent.isRight(current) && grandParent.isRight(parent)) {
                     leftRotation(parent);
-                    print(false);
+                   // print(false);
                     leftRotation(current);
-                    print(false);
+                   // print(false);
                 } else if (parent.isLeft(current) && grandParent.isRight(parent)) {
                     rightRotation(parent);
-                    print(false);
+                   // print(false);
                     leftRotation(current);
-                    print(false);
+                   // print(false);
                 } else if (parent.isRight(current) && grandParent.isLeft(parent)) {
                     leftRotation(parent);
-                    print(false);
+                   // print(false);
                     rightRotation(current);
-                    print(false);
+                    //print(false);
                 } else {
                     System.err.println("err");
                 }
@@ -185,6 +187,10 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         // Current (Parent, B, C) Parent (null, A, B)
         parent.right = current.left;
 
+        if (parent.right != null) {
+            parent.right.parent = parent;
+        }
+
         // Current (Parent, Parent, C) Parent (null, A, B)
         current.left = parent;
 
@@ -194,8 +200,10 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         if (current.parent != null) {
             if (current.parent.left.equals(parent)) {
                 current.parent.left = current;
+                System.out.println("lP l");
             } else {
                 current.parent.right = current;
+                System.out.println("lP r");
             }
         }
 
@@ -210,6 +218,10 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         // Current (Parent, A, B) Parent (null, B, C)
         parent.left = current.right;
 
+        if (parent.left != null) {
+            parent.left.parent = parent;
+        }
+
         // Current (Parent, A, Parent) Parent (null, B, C)
         current.right = parent;
 
@@ -219,8 +231,10 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         if (current.parent != null) {
             if (current.parent.left.equals(parent)) {
                 current.parent.left = current;
+                System.out.println("rP l");
             } else {
                 current.parent.right = current;
+                System.out.println("rP r");
             }
         }
 
