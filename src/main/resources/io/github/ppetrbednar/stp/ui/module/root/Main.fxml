@@ -1,12 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="956.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.ppetrbednar.stp.ui.module.root.Main">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: -fx-primary-color;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.ppetrbednar.stp.ui.module.root.Main">
    <stylesheets>
       <URL value="@../../style/Global.css" />
       <URL value="@../../style/Effects.css" />
       <URL value="@_Style.css" />
    </stylesheets>
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f3f3f3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0" />
+      <ListView fx:id="listViewItems" focusTraversable="false" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="30.0" />
+      <TextArea fx:id="textAreaVisualization" focusTraversable="false" prefHeight="600.0" prefWidth="500.0" style="-fx-text-fill: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0" />
+      <Separator layoutX="800.0" layoutY="318.0" opacity="0.5" prefWidth="150.0" AnchorPane.leftAnchor="800.0" AnchorPane.topAnchor="318.0" />
+      <Separator layoutX="800.0" layoutY="455.0" opacity="0.5" prefWidth="150.0" AnchorPane.leftAnchor="800.0" />
+      <Label layoutX="808.0" layoutY="428.0" text="Profiling" textFill="WHITE" />
+      <Label layoutX="807.0" layoutY="292.0" text="Generation mode" textFill="WHITE" />
+      <Label layoutX="808.0" layoutY="14.0" text="Manual mode" textFill="WHITE" AnchorPane.topAnchor="13.0" />
+      <HBox layoutX="830.0" layoutY="75.0" spacing="50.0" AnchorPane.rightAnchor="25.0">
+         <children>
+            <VBox>
+               <children>
+                  <Label text="Item UID" textFill="WHITE" />
+                  <JFXTextField fx:id="textFieldUID" focusTraversable="false" prefHeight="17.0" prefWidth="150.0" promptText="UID" style="-jfx-unfocus-color: #cdcdcd !important;" styleClass="jfx-text-field-style-2" unFocusColor="#cdcdcd" />
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <Label text="Item title" textFill="WHITE" />
+                  <JFXTextField fx:id="textFieldTitle" focusTraversable="false" prefHeight="17.0" prefWidth="150.0" promptText="Title" style="-jfx-unfocus-color: #cdcdcd !important;" styleClass="jfx-text-field-style-2" unFocusColor="#cdcdcd" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Separator layoutX="800.0" layoutY="37.0" opacity="0.5" prefWidth="150.0" />
+      <HBox layoutX="855.0" layoutY="144.0" spacing="40.0">
+         <children>
+            <JFXButton focusTraversable="false" onAction="#insert" prefWidth="70.0" styleClass="btn-style-3" text="Insert" />
+            <JFXButton focusTraversable="false" onAction="#update" prefWidth="70.0" styleClass="btn-style-4" text="Update" />
+            <VBox spacing="45.0">
+               <children>
+                  <JFXButton focusTraversable="false" onAction="#delete" prefWidth="70.0" styleClass="btn-style-2" text="Delete" textFill="WHITE" />
+                  <JFXButton focusTraversable="false" onAction="#clear" prefWidth="70.0" styleClass="btn-style-2" text="Clear" textFill="WHITE" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox layoutX="825.0" layoutY="482.0" spacing="50.0">
+         <children>
+            <VBox>
+               <children>
+                  <Label text="Iterations" textFill="WHITE" />
+                  <JFXTextField fx:id="textFieldIterations" focusTraversable="false" prefHeight="17.0" prefWidth="150.0" promptText="Iterations" style="-jfx-unfocus-color: #cdcdcd !important;" styleClass="jfx-text-field-style-2" text="10000" unFocusColor="#cdcdcd" />
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <Label text="Items per iteration" textFill="WHITE" />
+                  <JFXTextField fx:id="textFieldPerIteration" focusTraversable="false" prefHeight="17.0" prefWidth="150.0" promptText="Items" style="-jfx-unfocus-color: #cdcdcd !important;" styleClass="jfx-text-field-style-2" text="1023" unFocusColor="#cdcdcd" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <JFXButton focusTraversable="false" layoutX="1105.0" layoutY="544.0" onAction="#profile" prefWidth="70.0" styleClass="btn-style-3" text="Profile" AnchorPane.rightAnchor="55.0" />
+      <JFXButton focusTraversable="false" layoutX="1075.0" layoutY="349.0" onAction="#generate" prefWidth="70.0" styleClass="btn-style-3" text="Generate" />
+      <VBox layoutX="825.0" layoutY="344.0">
+         <children>
+            <Label text="Items to generate" textFill="WHITE" />
+            <JFXTextField fx:id="textFieldToGenerate" focusTraversable="false" prefHeight="17.0" prefWidth="150.0" promptText="Items to generate" style="-jfx-unfocus-color: #cdcdcd !important;" styleClass="jfx-text-field-style-2" text="15" unFocusColor="#cdcdcd" />
+         </children>
+      </VBox>
+      <Label prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: -fx-primary-color;" text="Visualization" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </Label>
+      <Label layoutX="500.0" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: -fx-primary-color;" text="Items" textFill="WHITE" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </Label>
+      <HBox layoutX="829.0" layoutY="207.0">
+         <children>
+            <VBox spacing="10.0">
+               <children>
+                  <Label prefWidth="80.0" text="Items:" textFill="WHITE" />
+                  <Label prefWidth="80.0" text="Tree depth:" textFill="WHITE" />
+               </children>
+            </VBox>
+            <VBox spacing="10.0">
+               <children>
+                  <Label fx:id="labelItems" alignment="CENTER" prefWidth="100.0" text="0" textFill="WHITE" />
+                  <Label fx:id="labelTreeDepth" alignment="CENTER" prefWidth="100.0" text="0" textFill="WHITE" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

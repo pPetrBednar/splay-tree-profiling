@@ -22,5 +22,6 @@ module io.github.ppetrbednar.palladium {
 
     exports io.github.ppetrbednar.stp;
     exports io.github.ppetrbednar.stp.logic;
+    exports io.github.ppetrbednar.stp.logic.structures;
     opens io.github.ppetrbednar.stp.logic to javafx.fxml;
 }

@@ -1,6 +1,9 @@
 package io.github.ppetrbednar.stp.logic.structures;
 
+import java.util.Deque;
+import java.util.ArrayDeque;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     private class Node implements Comparable<Node> {
@@ -22,6 +25,68 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         }
     }
 
+    private class InorderKeyIterator implements Iterator<K> {
+
+        private final Deque<Node> stack;
+        private Node temp;
+
+        public InorderKeyIterator(Node root) {
+            stack = new ArrayDeque<>();
+            temp = root;
+            pushLeftSubTree(temp);
+        }
+
+        void pushLeftSubTree(Node temp) {
+            while (temp != null) {
+                stack.push(temp);
+                temp = temp.left;
+            }
+        }
+
+        @Override
+        public K next() {
+            temp = stack.pop();
+            pushLeftSubTree(temp.right);
+            return temp.key;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+    }
+
+    private class InorderValueIterator implements Iterator<V> {
+
+        private final Deque<Node> stack;
+        private Node temp;
+
+        public InorderValueIterator(Node root) {
+            stack = new ArrayDeque<>();
+            temp = root;
+            pushLeftSubTree(temp);
+        }
+
+        void pushLeftSubTree(Node temp) {
+            while (temp != null) {
+                stack.push(temp);
+                temp = temp.left;
+            }
+        }
+
+        @Override
+        public V next() {
+            temp = stack.pop();
+            pushLeftSubTree(temp.right);
+            return temp.value;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+    }
+
     private Node root;
     private HashMap<K, Node> index;
 
@@ -35,8 +100,23 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
 
     @Override
     public V get(K key) {
+
+        if (index.get(key) == null) {
+            return null;
+        }
+
         splay(index.get(key));
         return root.value;
+    }
+
+    @Override
+    public boolean contains(K key) {
+        return index.get(key) != null;
+    }
+
+    @Override
+    public int size() {
+        return index.size();
     }
 
     @Override
@@ -108,6 +188,22 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         index.remove(key);
 
         return removed;
+    }
+
+    @Override
+    public void clear() {
+        root = null;
+        index.clear();
+    }
+
+    @Override
+    public Iterator<K> inorderKeyIterator() {
+        return new InorderKeyIterator(root);
+    }
+
+    @Override
+    public Iterator<V> inorderValueIterator() {
+        return new InorderValueIterator(root);
     }
 
     @Override

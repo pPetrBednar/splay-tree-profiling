@@ -5,10 +5,10 @@ import io.github.ppetrbednar.stp.logic.STProfiler;
 
 public class AppLauncher {
     public static void main(String[] args) {
-        //App.main(args);
+        App.main(args);
 
-        STProfiler profiler = new STProfiler();
+       /* STProfiler profiler = new STProfiler();
        // profiler.profile();
-        profiler.testPrint();
+        profiler.testPrint();*/
     }
 }

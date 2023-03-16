@@ -3,6 +3,7 @@ package io.github.ppetrbednar.stp.logic;
 import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
+import io.github.ppetrbednar.stp.logic.structures.Item;
 import io.github.ppetrbednar.stp.logic.structures.SplayTree;
 import org.apache.commons.io.FileUtils;
 
@@ -12,18 +13,20 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class STProfiler {
-    public static final File PROFILING_FOLDER = new File("./experiment");
-    public static final File PROFILING_DATA_FILE = new File("./experiment/data.json");
-    public static final File PROFILING_STATISTICS_FILE = new File("./experiment/statistics.json");
-    public static final int EXPERIMENTS = 10000;
-    public static final int VALUES = 1023;
-    public static final int TEST_VALUES = 15;
+    public static final File PROFILING_FOLDER = new File("./profiling");
+    public static final File PROFILING_DATA_FILE = new File("./profiling/data.json");
+    public static final File PROFILING_STATISTICS_FILE = new File("./profiling/statistics.json");
+    private int iterations = 10000;
+    private int valuesPerIteration = 1023;
     public static final boolean SAVE_DATA = true;
     private final HashMap<Integer, ExperimentData> experimentData = new HashMap<>();
 
-    public void profile() {
+    public void profile(int iterations, int valuesPerIteration) {
 
-        for (int i = 1; i <= EXPERIMENTS; i++) {
+        this.iterations = iterations;
+        this.valuesPerIteration = valuesPerIteration;
+
+        for (int i = 1; i <= iterations; i++) {
             experiment(i);
         }
 
@@ -57,8 +60,8 @@ public class STProfiler {
         List<Integer> modes = Math.getModes(treeDepths);
 
         JsonObject statistics = new JsonObject();
-        statistics.put("experiments", EXPERIMENTS);
-        statistics.put("values", VALUES);
+        statistics.put("iterations", iterations);
+        statistics.put("values", valuesPerIteration);
         statistics.put("min", min);
         statistics.put("max", max);
         statistics.put("mean", mean);
@@ -82,7 +85,7 @@ public class STProfiler {
     private void experiment(int experimentId) {
         SplayTree<Integer, Integer> splayTree = new SplayTree<>();
         ArrayList<Integer> data = new ArrayList<>();
-        for (int i = 1; i <= VALUES; i++) {
+        for (int i = 1; i <= valuesPerIteration; i++) {
             data.add(i);
         }
 
@@ -95,19 +98,19 @@ public class STProfiler {
         experimentData.put(experimentId, new ExperimentData(data, splayTree.depth()));
     }
 
-    public void testPrint() {
-        SplayTree<Integer, Integer> splayTree = new SplayTree<>();
+    public SplayTree<Integer, Item> generate(int values) {
+        SplayTree<Integer, Item> splayTree = new SplayTree<>();
         ArrayList<Integer> data = new ArrayList<>();
-        for (int i = 1; i <= TEST_VALUES; i++) {
+        for (int i = 1; i <= values; i++) {
             data.add(i);
         }
 
         Collections.shuffle(data);
 
         for (Integer id : data) {
-            splayTree.add(id, id);
+            splayTree.add(id, new Item(id, "Item " + id));
         }
 
-        System.out.println(splayTree);
+        return splayTree;
     }
 }

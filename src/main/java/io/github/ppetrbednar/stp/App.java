@@ -23,9 +23,9 @@ public class App extends Application {
         System.setProperty("log4j.configurationFile", "app/lib/log4j2.xml");
 
         ScreenLoader<Root> root = new ScreenLoader<>("Root");
-        root.setupRootStage("DSTR", stage);
-        root.setMinSize(1200, 800);
-        root.setPrefSize(1600, 800);
+        root.setupRootStage("STP", stage);
+        root.setMinSize(1200, 640);
+        root.setPrefSize(1200, 640);
         root.setTransparent(true);
         //root.setResizeable();
 
