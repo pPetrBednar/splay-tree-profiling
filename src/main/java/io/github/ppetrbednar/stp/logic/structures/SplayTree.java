@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     private class Node implements Comparable<Node> {
         private final K key;
-        private V value;
+        private final V value;
 
         private Node parent;
         private Node left;
@@ -75,9 +75,10 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     }
 
     private void add(Node node) {
+        index.put(node.key, node);
+
         if (root == null) {
             root = node;
-            index.put(node.key, node);
             return;
         }
 
@@ -233,11 +234,11 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         StringBuilder output = new StringBuilder();
         output.append(root.key);
 
-        String pointerRight = "└──";
-        String pointerLeft = root.right != null ? "├──" : "└──";
+        String pointerLeft = "└─-─";
+        String pointerRight = root.left != null ? "├─+─" : "└─+─";
 
-        traverseNodes(output, "", pointerLeft, root.left, root.right != null);
-        traverseNodes(output, "", pointerRight, root.right, false);
+        traverseNodes(output, "", pointerRight, root.right, root.left != null);
+        traverseNodes(output, "", pointerLeft, root.left, false);
 
         return output;
     }
@@ -257,11 +258,11 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
             }
 
             String paddingForBoth = paddingBuilder.toString();
-            String pointerRight = "└──";
-            String pointerLeft = (node.right != null) ? "├──" : "└──";
+            String pointerLeft = "└─-─";
+            String pointerRight = (node.left != null) ? "├─+─" : "└─+─";
 
-            traverseNodes(sb, paddingForBoth, pointerLeft, node.left, node.right != null);
-            traverseNodes(sb, paddingForBoth, pointerRight, node.right, false);
+            traverseNodes(sb, paddingForBoth, pointerRight, node.right, node.left != null);
+            traverseNodes(sb, paddingForBoth, pointerLeft, node.left, false);
         }
     }
 
