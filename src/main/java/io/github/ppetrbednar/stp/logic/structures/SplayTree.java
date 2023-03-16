@@ -41,12 +41,15 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
 
     @Override
     public void add(K key, V value) {
-        Node node = new Node(key, value);
-        splay(searchNearest(key));
+        add(new Node(key, value));
+    }
+
+    private void addLegacy(Node node) {
+        splay(searchNearest(node.key));
 
         if (root == null) {
             root = node;
-            index.put(key, node);
+            index.put(node.key, node);
             return;
         }
 
@@ -68,7 +71,25 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         }
 
         root = node;
-        index.put(key, node);
+        index.put(node.key, node);
+    }
+
+    private void add(Node node) {
+        if (root == null) {
+            root = node;
+            index.put(node.key, node);
+            return;
+        }
+
+        Node nearest = searchNearest(node.key);
+
+        if (node.compareTo(nearest) < 0) {
+            nearest.left = node;
+        } else {
+            nearest.right = node;
+        }
+        node.parent = nearest;
+        splay(node);
     }
 
     @Override
@@ -91,6 +112,11 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     @Override
     public int depth() {
         return depth(root);
+    }
+
+    @Override
+    public String toString() {
+        return traversePreOrder(root).toString();
     }
 
     private void splay(Node current) {
@@ -237,10 +263,6 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
             traverseNodes(sb, paddingForBoth, pointerLeft, node.left, node.right != null);
             traverseNodes(sb, paddingForBoth, pointerRight, node.right, false);
         }
-    }
-
-    public StringBuilder visualize() {
-        return traversePreOrder(root);
     }
 
     private int depth(Node node) {

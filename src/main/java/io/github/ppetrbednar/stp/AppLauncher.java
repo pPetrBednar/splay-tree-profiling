@@ -8,6 +8,7 @@ public class AppLauncher {
         //App.main(args);
 
         STProfiler profiler = new STProfiler();
-        profiler.profile();
+       // profiler.profile();
+        profiler.testPrint();
     }
 }

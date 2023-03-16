@@ -8,4 +8,6 @@ public interface ISplayTree<K extends Comparable<K>, V> {
     V remove(K key);
 
     int depth();
+
+    String toString();
 }

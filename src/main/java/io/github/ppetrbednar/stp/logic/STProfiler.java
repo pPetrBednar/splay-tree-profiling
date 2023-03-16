@@ -17,6 +17,7 @@ public class STProfiler {
     public static final File PROFILING_STATISTICS_FILE = new File("./experiment/statistics.json");
     public static final int EXPERIMENTS = 10000;
     public static final int VALUES = 1023;
+    public static final int TEST_VALUES = 15;
     public static final boolean SAVE_DATA = true;
     private final HashMap<Integer, ExperimentData> experimentData = new HashMap<>();
 
@@ -32,6 +33,7 @@ public class STProfiler {
             if (SAVE_DATA) {
                 saveData();
             }
+
         } catch (IOException e) {
             System.out.println("Data saving failed.");
         }
@@ -74,7 +76,7 @@ public class STProfiler {
             experiments.add(data.toJsonObject());
         }
 
-        FileUtils.writeStringToFile(PROFILING_DATA_FILE, Jsoner.prettyPrint(experiments.toJson()), StandardCharsets.UTF_8);
+        FileUtils.writeStringToFile(PROFILING_DATA_FILE, experiments.toJson(), StandardCharsets.UTF_8);
     }
 
     private void experiment(int experimentId) {
@@ -91,5 +93,21 @@ public class STProfiler {
         }
 
         experimentData.put(experimentId, new ExperimentData(data, splayTree.depth()));
+    }
+
+    public void testPrint() {
+        SplayTree<Integer, Integer> splayTree = new SplayTree<>();
+        ArrayList<Integer> data = new ArrayList<>();
+        for (int i = 1; i <= TEST_VALUES; i++) {
+            data.add(i);
+        }
+
+        Collections.shuffle(data);
+
+        for (Integer id : data) {
+            splayTree.add(id, id);
+        }
+
+        System.out.println(splayTree);
     }
 }
