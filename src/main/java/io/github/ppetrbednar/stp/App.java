@@ -24,8 +24,8 @@ public class App extends Application {
 
         ScreenLoader<Root> root = new ScreenLoader<>("Root");
         root.setupRootStage("STP", stage);
-        root.setMinSize(1200, 640);
-        root.setPrefSize(1200, 640);
+        root.setMinSize(1400, 640);
+        root.setPrefSize(1400, 640);
         root.setTransparent(true);
         //root.setResizeable();
 
