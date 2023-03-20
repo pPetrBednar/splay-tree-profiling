@@ -25,6 +25,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -226,6 +227,16 @@ public class Main extends Module<Main, Root> {
     @FXML
     public void togglePrettyPrint(ActionEvent actionEvent) {
         Platform.runLater(this::updateVisualization);
+    }
+
+    @FXML
+    public void openProfilingFolder(ActionEvent actionEvent) {
+        Platform.runLater(() -> {
+            try {
+                Desktop.getDesktop().open(STProfiler.PROFILING_FOLDER);
+            } catch (IOException ignored) {
+            }
+        });
     }
 
     private class Compositor implements ICompositor {

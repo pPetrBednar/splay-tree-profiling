@@ -74,7 +74,7 @@
             </VBox>
          </children>
       </HBox>
-      <JFXButton focusTraversable="false" layoutX="1105.0" layoutY="544.0" onAction="#profile" prefWidth="70.0" styleClass="btn-style-3" text="Profile" AnchorPane.rightAnchor="55.0" />
+      <JFXButton focusTraversable="false" layoutX="1105.0" layoutY="544.0" onAction="#profile" prefWidth="70.0" styleClass="btn-style-4" text="Profile" AnchorPane.rightAnchor="55.0" />
       <JFXButton focusTraversable="false" layoutX="1275.0" layoutY="349.0" onAction="#generate" prefWidth="70.0" styleClass="btn-style-3" text="Generate" />
       <VBox layoutX="1025.0" layoutY="344.0">
          <children>
@@ -113,5 +113,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXToggleButton>
+      <JFXButton focusTraversable="false" layoutX="1057.0" layoutY="544.0" onAction="#openProfilingFolder" prefWidth="70.0" styleClass="btn-style-3" text="Folder" AnchorPane.leftAnchor="1055.0" />
    </children>
 </AnchorPane>
