@@ -21,5 +21,7 @@ public interface ISplayTree<K extends Comparable<K>, V> {
 
     int depth();
 
-    String toString();
+    String print();
+
+    String printLight();
 }

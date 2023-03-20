@@ -85,7 +85,7 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     }
 
     /**
-     * Utility for generating formatted strings from binary trees.
+     * Utility for generating formatted strings from binary trees. Code copied and optimized. Core functionality preserved.
      *
      * @author Eirik Halvard Sæther
      * @see <a href="https://github.com/eirikhalvard/binary-tree-to-string">Source repository</a>
@@ -109,9 +109,9 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
             this.treeHeight = height(root);
             this.size = size(root);
             if (size == 0) {
-                return "(empty tree)";
+                return "";
             } else if (size == 1) {
-                return "[" + String.valueOf(root.value) + "]";
+                return "[" + root.value + "]";
             }
 
             this.maxWordLength = new int[treeHeight + 1];
@@ -132,30 +132,23 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         }
 
         private int height(Node n) {
-            if (n == null) {
-                return -1;
-            }
-            return 1 + Math.max(height(n.left), height(n.right));
+            return n == null ? -1 : (1 + Math.max(height(n.left), height(n.right)));
         }
 
         private int size(Node n) {
-            if (n == null) return 0;
-            return 1 + size(n.left) + size(n.right);
+            return n == null ? 0 : (1 + size(n.left) + size(n.right));
         }
 
         private void traverseAndWrite() {
-            this.preorderHeights = new int[size][3];
+            preorderHeights = new int[size][3];
             findPreorderHeights(root, 0);
-
-            // find starting y-point
-            int rootsLeftHeight = preorderHeights[0][1];
-            int rootStartY = rootsLeftHeight == 0 ? 0 : rootsLeftHeight + 1;
+            int rootStartY = preorderHeights[0][1] == 0 ? 0 : preorderHeights[0][1] + 1;
 
             traverseAndWrite(root, 0, rootStartY, 0, new int[]{0});
         }
 
         private void traverseAndWrite(Node n, int depth, int startY, int startX, int[] iterator) {
-            int num = preorderHeights[iterator[0]++][0];
+            iterator[0]++;
             String nodeString = valueString(n, depth);
             writeToCharArray(nodeString, startY, startX);
             startX += nodeString.length();
@@ -178,9 +171,7 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
 
         private void writeConnectingLines(int startY, int endY, int startX) {
             writeToCharArray("--+", startY, startX);
-            int diff = endY - startY;
-            int increment = diff > 0 ? 1 : -1;
-            if (diff > 0) {
+            if (endY - startY > 0) {
                 for (int i = startY + 1; i < endY; i++) {
                     writeToCharArray("|", i, startX + 2);
                 }
@@ -219,7 +210,7 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
 
         private void writeToCharArray(String line, int y, int x) {
             if (line.length() + x >= xHeight) {
-                new Exception("Line was to long to write");
+                return;
             }
 
             for (int i = 0; i < line.length(); i++) {
@@ -228,12 +219,12 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         }
 
         private String charArrayToString() {
-            String result = "";
-            for (int i = 0; i < chars.length; i++) {
+            StringBuilder result = new StringBuilder();
+            for (char[] aChar : chars) {
                 for (int j = 0; j < chars[0].length; j++) {
-                    result += String.valueOf(chars[i][j]);
+                    result.append(aChar[j]);
                 }
-                result += "\n";
+                result.append("\n");
             }
             return result.substring(0, result.length() - 1); // remove last newline
         }
@@ -254,42 +245,87 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
             computeMaxWordLength(root, 0);
             int sum = 0;
             for (int i = 0; i < treeHeight; i++) {
-                sum += "[".length()
-                        + maxWordLength[i]
-                        + "]".length()
-                        + "--+--".length();
+                sum += maxWordLength[i] + 7;
             }
-            sum += "[".length() + maxWordLength[treeHeight] + "]".length();
+            sum += maxWordLength[treeHeight] + 2;
             return sum;
         }
 
         private void computeMaxWordLength(Node n, int depth) {
-            if (n == null) return;
+            if (n == null) {
+                return;
+            }
+
             int nodeStringLength = n.toString().length();
             if (nodeStringLength > maxWordLength[depth]) {
                 maxWordLength[depth] = nodeStringLength;
             }
+
             computeMaxWordLength(n.left, depth + 1);
             computeMaxWordLength(n.right, depth + 1);
         }
 
         private String valueString(Node n, int depth) {
-            String result = "";
             int totalCount = maxWordLength[depth] - n.toString().length();
             int leftCount = totalCount / 2;
             int rightCount = totalCount - leftCount;
-            String leftPadding = repeat(" ", leftCount);
-            String rightPadding = repeat(" ", rightCount);
 
-            return "[" + leftPadding + n.key + rightPadding + "]";
+            StringBuilder output = new StringBuilder();
+            output.append("[")
+                    .append(" ".repeat(leftCount))
+                    .append(n.key)
+                    .append(" ".repeat(rightCount))
+                    .append("]");
+            return output.toString();
+        }
+    }
+
+    /**
+     * Lightweight utility for generating formatted strings from binary trees. Code copied and optimized. Core functionality preserved.
+     *
+     * @author Yavuz Tas
+     * @see <a href="https://www.baeldung.com/java-print-binary-tree-diagram">Source website</a>
+     */
+    private class TreeStringLight {
+        private StringBuilder traversePreOrder(Node root) {
+
+            if (root == null) {
+                return new StringBuilder();
+            }
+
+            StringBuilder output = new StringBuilder();
+            output.append(root.key);
+
+            String pointerLeft = "└─-─";
+            String pointerRight = root.left != null ? "├─+─" : "└─+─";
+
+            traverseNodes(output, "", pointerRight, root.right, root.left != null);
+            traverseNodes(output, "", pointerLeft, root.left, false);
+
+            return output;
         }
 
-        private String repeat(String s, int count) {
-            String result = "";
-            for (int i = 0; i < count; i++) {
-                result += s;
+        private void traverseNodes(StringBuilder sb, String padding, String pointer, Node node, boolean hasRightSibling) {
+            if (node != null) {
+                sb.append("\n");
+                sb.append(padding);
+                sb.append(pointer);
+                sb.append(node.key);
+
+                StringBuilder paddingBuilder = new StringBuilder(padding);
+                if (hasRightSibling) {
+                    paddingBuilder.append("│  ");
+                } else {
+                    paddingBuilder.append("   ");
+                }
+
+                String paddingForBoth = paddingBuilder.toString();
+                String pointerLeft = "└─-─";
+                String pointerRight = (node.left != null) ? "├─+─" : "└─+─";
+
+                traverseNodes(sb, paddingForBoth, pointerRight, node.right, node.left != null);
+                traverseNodes(sb, paddingForBoth, pointerLeft, node.left, false);
             }
-            return result;
         }
     }
 
@@ -328,55 +364,6 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     @Override
     public void add(K key, V value) {
         add(new Node(key, value));
-    }
-
-    private void addLegacy(Node node) {
-        splay(searchNearest(node.key));
-
-        if (root == null) {
-            root = node;
-            index.put(node.key, node);
-            return;
-        }
-
-        root.parent = node;
-        if (node.compareTo(root) < 0) {
-            node.left = root.left;
-            if (node.left != null) {
-                node.left.parent = node;
-            }
-            root.left = null;
-            node.right = root;
-        } else {
-            node.right = root.right;
-            if (node.right != null) {
-                node.right.parent = node;
-            }
-            root.right = null;
-            node.left = root;
-        }
-
-        root = node;
-        index.put(node.key, node);
-    }
-
-    private void add(Node node) {
-        index.put(node.key, node);
-
-        if (root == null) {
-            root = node;
-            return;
-        }
-
-        Node nearest = searchNearest(node.key);
-
-        if (node.compareTo(nearest) < 0) {
-            nearest.left = node;
-        } else {
-            nearest.right = node;
-        }
-        node.parent = nearest;
-        splay(node);
     }
 
     @Override
@@ -418,11 +405,7 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     }
 
     @Override
-    public String toString() {
-        if (index.size() > 50) {
-            return traversePreOrder(root).toString();
-        }
-
+    public String print() {
         String treeString = new TreeString(root).solve();
         Deque<String> lines = new ArrayDeque<>(List.of(treeString.split("\n")));
         StringBuilder treeStringMirrored = new StringBuilder();
@@ -432,6 +415,31 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         }
 
         return treeStringMirrored.toString();
+    }
+
+    @Override
+    public String printLight() {
+        return new TreeStringLight().traversePreOrder(root).toString();
+    }
+
+    private void add(Node node) {
+        index.put(node.key, node);
+
+        if (root == null) {
+            root = node;
+            return;
+        }
+
+        Node nearest = searchNearest(node.key);
+
+        if (node.compareTo(nearest) < 0) {
+            nearest.left = node;
+        } else {
+            nearest.right = node;
+        }
+
+        node.parent = nearest;
+        splay(node);
     }
 
     private void splay(Node current) {
@@ -459,8 +467,6 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
             } else if (current == current.parent.left && current.parent == current.parent.parent.right) {
                 rotateRight(current.parent);
                 rotateLeft(current.parent);
-            } else {
-                System.out.println("err");
             }
         }
         root = current;
@@ -539,47 +545,6 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         return target;
     }
 
-    private StringBuilder traversePreOrder(Node root) {
-
-        if (root == null) {
-            return new StringBuilder();
-        }
-
-        StringBuilder output = new StringBuilder();
-        output.append(root.key);
-
-        String pointerLeft = "└─-─";
-        String pointerRight = root.left != null ? "├─+─" : "└─+─";
-
-        traverseNodes(output, "", pointerRight, root.right, root.left != null);
-        traverseNodes(output, "", pointerLeft, root.left, false);
-
-        return output;
-    }
-
-    private void traverseNodes(StringBuilder sb, String padding, String pointer, Node node, boolean hasRightSibling) {
-        if (node != null) {
-            sb.append("\n");
-            sb.append(padding);
-            sb.append(pointer);
-            sb.append(node.key);
-
-            StringBuilder paddingBuilder = new StringBuilder(padding);
-            if (hasRightSibling) {
-                paddingBuilder.append("│  ");
-            } else {
-                paddingBuilder.append("   ");
-            }
-
-            String paddingForBoth = paddingBuilder.toString();
-            String pointerLeft = "└─-─";
-            String pointerRight = (node.left != null) ? "├─+─" : "└─+─";
-
-            traverseNodes(sb, paddingForBoth, pointerRight, node.right, node.left != null);
-            traverseNodes(sb, paddingForBoth, pointerLeft, node.left, false);
-        }
-    }
-
     private int depth(Node node) {
         if (node == null) {
             return 0;
@@ -589,6 +554,5 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         int rightDepth = depth(node.right);
 
         return leftDepth > rightDepth ? ++leftDepth : ++rightDepth;
-
     }
 }

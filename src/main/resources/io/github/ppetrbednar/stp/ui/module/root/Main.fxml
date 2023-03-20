@@ -2,8 +2,10 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
@@ -106,5 +108,10 @@
             </VBox>
          </children>
       </HBox>
+      <JFXToggleButton fx:id="toggleBtnPrettyPrint" contentDisplay="RIGHT" focusTraversable="false" layoutX="590.0" layoutY="550.0" onAction="#togglePrettyPrint" selected="true" size="6.0" style="-fx-background-color: transparent;" text="Pretty print" toggleColor="#157cbf" toggleLineColor="#80ceff" AnchorPane.bottomAnchor="0.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXToggleButton>
    </children>
 </AnchorPane>

@@ -6,6 +6,7 @@ import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import io.github.ppetrbednar.stp.logic.STProfiler;
 import io.github.ppetrbednar.stp.logic.structures.Item;
 import io.github.ppetrbednar.stp.logic.structures.SplayTree;
@@ -59,6 +60,8 @@ public class Main extends Module<Main, Root> {
     private Label labelItems;
     @FXML
     private Label labelTreeDepth;
+    @FXML
+    private JFXToggleButton toggleBtnPrettyPrint;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -153,15 +156,17 @@ public class Main extends Module<Main, Root> {
     }
 
     private void updateVisualization() {
-        listViewItems.getItems().clear();
-        textAreaVisualization.setText(splayTree.toString());
-        Iterator<Item> it = splayTree.inorderValueIterator();
-        while (it.hasNext()) {
-            listViewItems.getItems().add(it.next());
-        }
+        Platform.runLater(() -> {
+            listViewItems.getItems().clear();
+            textAreaVisualization.setText(toggleBtnPrettyPrint.isSelected() ? splayTree.print() : splayTree.printLight());
+            Iterator<Item> it = splayTree.inorderValueIterator();
+            while (it.hasNext()) {
+                listViewItems.getItems().add(it.next());
+            }
 
-        labelItems.setText(splayTree.size() + "");
-        labelTreeDepth.setText(splayTree.depth() + "");
+            labelItems.setText(splayTree.size() + "");
+            labelTreeDepth.setText(splayTree.depth() + "");
+        });
     }
 
     @FXML
@@ -216,6 +221,11 @@ public class Main extends Module<Main, Root> {
             AlertManager am = new AlertManager(AlertManager.AlertType.WARNING, "Incorrect value provided.", false);
             am.show();
         }
+    }
+
+    @FXML
+    public void togglePrettyPrint(ActionEvent actionEvent) {
+        Platform.runLater(this::updateVisualization);
     }
 
     private class Compositor implements ICompositor {
