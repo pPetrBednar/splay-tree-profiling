@@ -270,13 +270,11 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
             int leftCount = totalCount / 2;
             int rightCount = totalCount - leftCount;
 
-            StringBuilder output = new StringBuilder();
-            output.append("[")
-                    .append(" ".repeat(leftCount))
-                    .append(n.key)
-                    .append(" ".repeat(rightCount))
-                    .append("]");
-            return output.toString();
+            return "[" +
+                    " ".repeat(leftCount) +
+                    n.key +
+                    " ".repeat(rightCount) +
+                    "]";
         }
     }
 
@@ -330,10 +328,9 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     }
 
     private Node root;
-    private HashMap<K, Node> index;
+    private int size;
 
     public SplayTree() {
-        index = new HashMap<>();
     }
 
     private SplayTree(Node root) {
@@ -341,34 +338,63 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     }
 
     @Override
-    public V get(K key) {
+    public V get(K key) throws NoSuchElementException {
+        Node node = getNode(key);
 
-        if (index.get(key) == null) {
-            return null;
+        if (node == null) {
+            throw new NoSuchElementException();
         }
 
-        splay(index.get(key));
+        splay(node);
         return root.value;
     }
 
     @Override
+    public V getOrNull(K key) {
+        try {
+            return get(key);
+        } catch (NoSuchElementException ex) {
+            return null;
+        }
+    }
+
+    @Override
     public boolean contains(K key) {
-        return index.get(key) != null;
+        return getOrNull(key) != null;
     }
 
     @Override
     public int size() {
-        return index.size();
+        return size;
     }
 
     @Override
     public void add(K key, V value) {
-        add(new Node(key, value));
+        Node node = new Node(key, value);
+        if (root == null) {
+            root = node;
+            return;
+        }
+
+        Node nearest = searchNearest(node.key);
+
+        if (node.compareTo(nearest) < 0) {
+            nearest.left = node;
+        } else {
+            nearest.right = node;
+        }
+
+        node.parent = nearest;
+        splay(node);
+        size++;
     }
 
     @Override
-    public V remove(K key) {
-        splay(index.get(key));
+    public V remove(K key) throws NoSuchElementException {
+
+        if (!contains(key)) {
+            throw new NoSuchElementException();
+        }
 
         root.left.parent = null;
         root.right.parent = null;
@@ -378,15 +404,24 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
 
         V removed = root.value;
         root = union(new SplayTree<>(left), new SplayTree<>(right)).root;
-        index.remove(key);
+        size--;
 
         return removed;
     }
 
     @Override
+    public V removeOrNull(K key) {
+        try {
+            return remove(key);
+        } catch (NoSuchElementException ex) {
+            return null;
+        }
+    }
+
+    @Override
     public void clear() {
         root = null;
-        index.clear();
+        size = 0;
     }
 
     @Override
@@ -422,24 +457,13 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
         return new TreeStringLight().traversePreOrder(root).toString();
     }
 
-    private void add(Node node) {
-        index.put(node.key, node);
+    private Node getNode(K key) {
+        Node current = root;
 
-        if (root == null) {
-            root = node;
-            return;
+        while (current != null && !current.key.equals(key)) {
+            current = key.compareTo(current.key) < 0 ? current.left : current.right;
         }
-
-        Node nearest = searchNearest(node.key);
-
-        if (node.compareTo(nearest) < 0) {
-            nearest.left = node;
-        } else {
-            nearest.right = node;
-        }
-
-        node.parent = nearest;
-        splay(node);
+        return current;
     }
 
     private void splay(Node current) {

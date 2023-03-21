@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
 /**
@@ -77,7 +78,7 @@ public class Main extends Module<Main, Root> {
             return;
         }
 
-        Integer uid = null;
+        Integer uid;
         try {
             uid = Integer.parseInt(textFieldUID.getText());
         } catch (Exception e) {
@@ -114,14 +115,13 @@ public class Main extends Module<Main, Root> {
             return;
         }
 
-        if (!splayTree.contains(uid)) {
+        try {
+            splayTree.get(uid).setTitle(textFieldTitle.getText());
+            updateVisualization();
+        } catch (NoSuchElementException ex) {
             AlertManager am = new AlertManager(AlertManager.AlertType.WARNING, "Item with UID (" + textFieldUID.getText() + ") not found.", false);
             am.show();
-            return;
         }
-
-        splayTree.get(uid).setTitle(textFieldTitle.getText());
-        updateVisualization();
     }
 
     @FXML
@@ -140,14 +140,13 @@ public class Main extends Module<Main, Root> {
             return;
         }
 
-        if (!splayTree.contains(uid)) {
+        try {
+            splayTree.remove(uid);
+            updateVisualization();
+        } catch (NoSuchElementException ex) {
             AlertManager am = new AlertManager(AlertManager.AlertType.WARNING, "Item with UID (" + textFieldUID.getText() + ") not found.", false);
             am.show();
-            return;
         }
-
-        splayTree.remove(uid);
-        updateVisualization();
     }
 
     @FXML
