@@ -371,6 +371,8 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     @Override
     public void add(K key, V value) {
         Node node = new Node(key, value);
+        size++;
+        
         if (root == null) {
             root = node;
             return;
@@ -386,7 +388,6 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
 
         node.parent = nearest;
         splay(node);
-        size++;
     }
 
     @Override
