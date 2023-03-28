@@ -339,6 +339,11 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
 
     @Override
     public V get(K key) throws NoSuchElementException {
+
+        if (key == null) {
+            return null;
+        }
+
         Node node = getNode(key);
 
         if (node == null) {
@@ -370,9 +375,14 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
 
     @Override
     public void add(K key, V value) {
+
+        if (key == null) {
+            throw new IllegalArgumentException();
+        }
+
         Node node = new Node(key, value);
         size++;
-        
+
         if (root == null) {
             root = node;
             return;
@@ -397,8 +407,15 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
             throw new NoSuchElementException();
         }
 
-        root.left.parent = null;
-        root.right.parent = null;
+        splay(getNode(key));
+
+        if (root.left != null) {
+            root.left.parent = null;
+        }
+
+        if (root.right != null) {
+            root.right.parent = null;
+        }
 
         Node left = root.left;
         Node right = root.right;
@@ -552,6 +569,11 @@ public class SplayTree<K extends Comparable<K>, V> implements ISplayTree<K, V> {
     }
 
     private Node max(Node node) {
+
+        if (node == null) {
+            return null;
+        }
+
         while (node.right != null) {
             node = node.right;
         }
